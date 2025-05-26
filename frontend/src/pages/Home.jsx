@@ -1,10 +1,12 @@
-import { Button } from '../components/ui/button'
+
+import Hero from '../components/Hero'
 import React from 'react'
+
 
 const Home = () => {
   return (
-    <div>Home
-        <Button>Click me</Button>
+    <div className='pt-20'>
+      <Hero/>
     </div>
   )
 }

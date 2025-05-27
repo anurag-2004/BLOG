@@ -1,15 +1,43 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from "../assets/logo.png"
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Search } from 'lucide-react'
 import { FaEdit, FaMoon, FaRegEdit, FaSun } from 'react-icons/fa'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleTheme } from '../redux/themeSlice'
+import axios from 'axios'
+import { setUser } from '../redux/authSlice'
+import { toast } from 'sonner'
+
 
 const Navbar = () => {
-    const user=false;
-  return (
-    <div className='py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50'>
+    const { user } = useSelector(store => store.auth)
+    const {theme} = useSelector(store =>store.theme)
+    const dispatch = useDispatch()
+    const navigate= useNavigate()
+
+    const logoutHandler = async (e) => {
+
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/user/logout`, { withCredentials: true });
+            if (res.data.success) {
+                navigate("/")
+                dispatch(setUser(null))
+                toast.success(res.data.message)
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message)
+
+        }
+    }
+
+
+    return (
+        <div className='py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50'>
             <div className='max-w-7xl mx-auto flex justify-between items-center px-4 md:px-0'>
                 {/* logo section */}
                 <div className='flex gap-7 items-center'>
@@ -23,8 +51,8 @@ const Navbar = () => {
                         <Input type="text"
                             placeholder="Search"
                             className="border border-gray-700 dark:bg-gray-900 bg-gray-300 w-[300px] hidden md:block"
-                            // value={searchTerm}
-                            // onChange={(e) => setSearchTerm(e.target.value)}
+                        // value={searchTerm}
+                        // onChange={(e) => setSearchTerm(e.target.value)}
                         />
                         <Button className='absolute right-0 top-0'><Search /></Button>
                     </div>
@@ -37,21 +65,30 @@ const Navbar = () => {
                         {/* <NavLink to={'/write-blog'} className={`cursor-pointer`}><li>Write a Blog</li></NavLink> */}
                     </ul>
                     <div className='flex'>
-                        <Button><FaMoon/></Button>
+                        <Button onClick={() => dispatch(toggleTheme())} className="">
+                            {
+                                theme === 'light' ? <FaMoon /> : <FaSun />
+                            }
+
+                        </Button>
                         {
                             user ? <div className="ml-7 flex gap-3 items-center">
-                                
+                                <Avatar className="cursor-pointer">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <Button onClick={logoutHandler}>Logout</Button>
                             </div> : <div className='ml-7 md:flex gap-2 '>
                                 <Link to={'/login'}><Button>Login</Button></Link>
                                 <Link className='hidden md:block' to={'/signup'}><Button>Signup</Button></Link>
                             </div>
                         }
                     </div>
-                    
+
                 </nav>
             </div>
         </div>
-  )
+    )
 }
 
 export default Navbar

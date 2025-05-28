@@ -6,6 +6,11 @@ import Blogs from './pages/Blogs'
 import About from './pages/About'
 import Login from './pages/Login'
 import Navbar from './components/Navbar'
+import Dashboard from './pages/Dashboard'
+import CreateBlog from './pages/CreateBlog'
+import YourBlog from './pages/YourBlog'
+import Comments from './pages/Comments'
+import Profile from './pages/Profile'
 
 
 const router= createBrowserRouter([
@@ -29,6 +34,34 @@ const router= createBrowserRouter([
     path:"/signup",
     element:<><Navbar/><Signup/></>
   },
+  {
+    path:"/dashboard",
+    element:<><Navbar/><Dashboard/></>,
+    children:[
+      {
+        path: "write-blog",
+        element:<><CreateBlog/></>
+      },
+      // {
+      //   path: "write-blog/:blogId",
+      //   element: <><UpdateBlog /></>
+      // },
+      {
+        path: "your-blog",
+        element:<YourBlog/>
+      },
+      {
+        path: "comments",
+        element:<Comments/>
+      },
+      {
+        path: "profile",
+        element:<Profile/>
+      },
+      
+      
+    ]
+  }
 ])
 
 const App = () => {

@@ -3,7 +3,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from "../assets/logo.png"
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { Search } from 'lucide-react'
 import { FaEdit, FaMoon, FaRegEdit, FaSun } from 'react-icons/fa'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +10,38 @@ import { toggleTheme } from '../redux/themeSlice'
 import axios from 'axios'
 import { setUser } from '../redux/authSlice'
 import { toast } from 'sonner'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
+
+import {
+    ChartColumnBig,
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Search,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+} from "lucide-react"
+
+import { LiaCommentSolid } from 'react-icons/lia'
+
 
 
 const Navbar = () => {
@@ -73,10 +104,46 @@ const Navbar = () => {
                         </Button>
                         {
                             user ? <div className="ml-7 flex gap-3 items-center">
-                                <Avatar className="cursor-pointer">
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
+                                <DropdownMenu className="">
+                                    <DropdownMenuTrigger asChild>
+                                        <Avatar className="cursor-pointer">
+                                            <AvatarImage src= "https://github.com/shadcn.png" />
+                                            <AvatarFallback>CN</AvatarFallback>
+                                        </Avatar>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56 dark:bg-gray-800">
+                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem>
+                                                <User />
+                                                <span>Profile</span>
+                                                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem >
+                                                <ChartColumnBig />
+                                                <span>Your Blog</span>
+                                                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem >
+                                                <LiaCommentSolid />
+                                                <span>Comments</span>
+                                                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <FaRegEdit />
+                                                <span>Write Blog</span>
+                                                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem >
+                                            <LogOut />
+                                            <span>Log out</span>
+                                            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                                 <Button onClick={logoutHandler}>Logout</Button>
                             </div> : <div className='ml-7 md:flex gap-2 '>
                                 <Link to={'/login'}><Button>Login</Button></Link>

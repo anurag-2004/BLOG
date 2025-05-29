@@ -115,22 +115,22 @@ const Navbar = () => {
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/profile')}>
                                                 <User />
                                                 <span>Profile</span>
                                                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem >
+                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/your-blog')} >
                                                 <ChartColumnBig />
                                                 <span>Your Blog</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem >
+                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/comments')}>
                                                 <LiaCommentSolid />
                                                 <span>Comments</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/write-blog')}>
                                                 <FaRegEdit />
                                                 <span>Write Blog</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>

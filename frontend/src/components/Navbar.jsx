@@ -20,6 +20,7 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
+import userLogo from "../assets/user.jpg"
 
 import {
     ChartColumnBig,
@@ -107,7 +108,7 @@ const Navbar = () => {
                                 <DropdownMenu className="">
                                     <DropdownMenuTrigger asChild>
                                         <Avatar className="cursor-pointer">
-                                            <AvatarImage src= "https://github.com/shadcn.png" />
+                                            <AvatarImage src= {user.photoUrl ||userLogo} />
                                             <AvatarFallback>CN</AvatarFallback>
                                         </Avatar>
                                     </DropdownMenuTrigger>

@@ -52,42 +52,43 @@ const Profile = () => {
         setInput({ ...input, file: e.target.files?.[0] })
     }
 
-    // const submitHandler = async (e) => {
-    //     e.preventDefault()
-    //     const formData = new FormData();
-    //     formData.append("firstName", input.firstName);
-    //     formData.append("lastName", input.lastName);
-    //     formData.append("bio", input.bio);
-    //     formData.append("occupation", input.occupation);
-    //     formData.append("facebook", input.facebook);
-    //     formData.append("linkedin", input.linkedin);
-    //     formData.append("instagram", input.instagram);
-    //     formData.append("github", input.github);
-    //     if (input?.file) {
-    //         formData.append("file", input?.file)
-    //     }
+    const submitHandler = async (e) => {
+        e.preventDefault()
+        console.log(input);
+        const formData = new FormData();
+        formData.append("firstName", input.firstName);
+        formData.append("lastName", input.lastName);
+        formData.append("bio", input.bio);
+        formData.append("occupation", input.occupation);
+        formData.append("facebook", input.facebook);
+        formData.append("linkedin", input.linkedin);
+        formData.append("instagram", input.instagram);
+        formData.append("github", input.github);
+        if (input?.file) {
+            formData.append("file", input?.file)
+        }
 
-    //     try {
-    //         setLoading(true)
-    //         const res = await axios.put(`https://mern-blog-ha28.onrender.com/api/v1/user/profile/update`, formData, {
-    //             headers: {
-    //                 "Content-Type": "multipart/form-data"
-    //             },
-    //             withCredentials: true,
-    //         })
-    //         if (res.data.success) {
-    //             setOpen(false)
-    //             toast.success(res.data.message)
-    //             dispatch(setUser(res.data.user))
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
+        try {
+            setLoading(true)
+            const res = await axios.put(`http://localhost:8000/api/v1/user/profile/update`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                withCredentials: true,
+            })
+            if (res.data.success) {
+                setOpen(false)
+                toast.success(res.data.message)
+                dispatch(setUser(res.data.user))
+            }
+        } catch (error) {
+            console.log(error);
 
-    //     } finally {
-    //         setLoading(false)
-    //     }
+        } finally {
+            setLoading(false)
+        }
 
-    // }
+    }
 
     return (
         <div className='pt-20 md:ml-[320px] md:h-screen'>
@@ -228,7 +229,7 @@ const Profile = () => {
                                 </div>
                                 <DialogFooter>
                                     {
-                                        loading ? <Button ><Loader2 className='mr-2 w-4 h-4 animate-spin' /> Please wait</Button> : <Button>Save Changes</Button>
+                                        loading ? <Button ><Loader2 className='mr-2 w-4 h-4 animate-spin' /> Please wait</Button> : <Button onClick={submitHandler}>Save Changes</Button>
                                     }
 
                                 </DialogFooter>

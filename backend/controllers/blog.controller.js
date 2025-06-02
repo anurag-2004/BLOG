@@ -83,3 +83,26 @@ export const getOwnBlogs = async(req, res) =>{
     }
 }
 
+export const deleteBlog = async(req, res) =>{
+    try {
+        const blogId = req.params.id;
+        const authorId = req.id
+        const blog = await Blog.findById(blogId)
+        if(!blog){
+            return res.status(404).json({success:false, message:"Blog not found"})
+        }
+        if(blog.author.toString() !== authorId){
+            return res.status(403).json({
+                sucess:false, message:"Unauthorized to delete this blog"
+            })
+        }
+        //Delete blog
+        await Blog.findByIdAndDelete(blogId)
+
+        res.status(200).json({success:true, message:"Blog deleted successfully"})
+        
+    } catch (error) {
+        return res.status(500).json({success:false, message:"Error deleting blog", error:error.message})
+    }
+}
+

@@ -83,41 +83,41 @@ const UpdateBlog = () => {
         }
     }
 
-    // const togglePublishUnpublish = async ()=>{
-    //     try {
-    //         const res = await axios.patch(`http://localhost:8000/api/v1/blog/${id}`, {
-    //             // params:{
-    //             //     action
-    //             // },
-    //             withCredentials:true
-    //         })
-    //         if(res.data.success){
-    //             setPublish(!publish)
-    //             toast.success(res.data.message)
-    //             navigate('/dashboard/your-blog')
-    //         } else{
-    //             toast.error("failed to update")
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
+    const togglePublishUnpublish = async ()=>{
+        try {
+            const res = await axios.patch(`http://localhost:8000/api/v1/blog/${id}`, {
+                // params:{
+                //     action
+                // },
+                withCredentials:true
+            })
+            if(res.data.success){
+                setPublish(!publish)
+                toast.success(res.data.message)
+                navigate('/dashboard/your-blog')
+            } else{
+                toast.error("failed to update")
+            }
+        } catch (error) {
+            console.log(error);
             
-    //     }
-    // }
+        }
+    }
 
-    // const deleteBlog = async ()=>{
-    //     try {
-    //        const res = await axios.delete(`https://blog-yt.onrender.com/api/v1/blog/delete/${id}`,{withCredentials:true})
-    //        if(res.data.success){
-    //         const updatedBlogData = blog.filter((blogItem)=>blogItem?._id !== id);
-    //         dispatch(setBlog(updatedBlogData))
-    //         toast.success(res.data.message)
-    //         navigate('/dashboard/your-blog')
-    //        } 
-    //     } catch (error) {
-    //         console.log(eror);
-    //        toast.error("Something went error")   
-    //     }
-    // }
+    const deleteBlog = async ()=>{
+        try {
+           const res = await axios.delete(`http://localhost:8000/api/v1/blog/delete/${id}`,{withCredentials:true})
+           if(res.data.success){
+            const updatedBlogData = blog.filter((blogItem)=>blogItem?._id !== id);
+            dispatch(setBlog(updatedBlogData))
+            toast.success(res.data.message)
+            navigate('/dashboard/your-blog')
+           } 
+        } catch (error) {
+            console.log(eror);
+           toast.error("Something went error")   
+        }
+    }
 
     return (
         <div className='md:ml-[320px] pt-20 px-3 pb-10 '>
@@ -126,12 +126,12 @@ const UpdateBlog = () => {
                     <h1 className='text-4xl font-bold'>Basic Blog Information</h1>
                     <p>Make changes to your blogs here. Click publish when you are done</p>
                     <div className='space-x-2'>
-                        <Button >
+                        <Button onClick={()=>togglePublishUnpublish(selectBlog.isPublished ? "false":"true")} >
                             {
                                 selectBlog?.isPublished ? "UnPublish" :"Publish"
                             }
                         </Button>
-                        <Button>Remove blog</Button>
+                        <Button onClick={deleteBlog} variant="destructive">Remove blog</Button>
                     </div>
                     <div className='pt-10'>
                         <Label className="mb-1">Title</Label>

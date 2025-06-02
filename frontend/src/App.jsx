@@ -1,20 +1,22 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home'
-import Signup from './pages/Signup'
 import Blogs from './pages/Blogs'
 import About from './pages/About'
+import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
-import CreateBlog from './pages/CreateBlog'
+import Profile from './pages/Profile'
 import YourBlog from './pages/YourBlog'
 import Comments from './pages/Comments'
-import Profile from './pages/Profile'
+import CreateBlog from './pages/CreateBlog'
 import UpdateBlog from './pages/UpdateBlog'
+import BlogView from './pages/BlogView'
+// import Footer from './components/Footer'
+// import SearchList from './pages/SearchList'
 
-
-const router= createBrowserRouter([
+const router = createBrowserRouter([
   {
     path:"/",
     element:<><Navbar/><Home/></>
@@ -27,6 +29,10 @@ const router= createBrowserRouter([
     path:"/about",
     element:<><Navbar/><About/></>
   },
+  // {
+  //   path:"/search",
+  //   element:<><Navbar/><SearchList/><Footer/></>
+  // },
   {
     path:"/login",
     element:<><Navbar/><Login/></>
@@ -36,31 +42,33 @@ const router= createBrowserRouter([
     element:<><Navbar/><Signup/></>
   },
   {
+    path:"/blogs/:blogId",
+    element:<><Navbar/><BlogView/></>
+  },
+  {
     path:"/dashboard",
     element:<><Navbar/><Dashboard/></>,
     children:[
       {
-        path: "write-blog",
-        element:<><CreateBlog/></>
+        path:"profile",
+        element:<Profile/>
       },
       {
-        path: "write-blog/:blogId",
-        element: <><UpdateBlog /></>
-      },
-      {
-        path: "your-blog",
+        path:"your-blog",
         element:<YourBlog/>
       },
       {
-        path: "comments",
+        path:"comments",
         element:<Comments/>
       },
       {
-        path: "profile",
-        element:<Profile/>
+        path:"write-blog",
+        element:<CreateBlog/>
       },
-      
-      
+      {
+        path:"write-blog/:blogId",
+        element:<UpdateBlog/>
+      }
     ]
   }
 ])

@@ -15,7 +15,7 @@ import UpdateBlog from './pages/UpdateBlog'
 import BlogView from './pages/BlogView'
 import Footer from './components/Footer'
 
-// import SearchList from './pages/SearchList'
+import SearchList from './pages/SearchList'
 
 const router = createBrowserRouter([
   {
@@ -30,10 +30,10 @@ const router = createBrowserRouter([
     path:"/about",
     element:<><Navbar/><About/><Footer/></>
   },
-  // {
-  //   path:"/search",
-  //   element:<><Navbar/><SearchList/><Footer/></>
-  // },
+  {
+    path:"/search",
+    element:<><Navbar/><SearchList/><Footer/></>
+  },
   {
     path:"/login",
     element:<><Navbar/><Login/></>

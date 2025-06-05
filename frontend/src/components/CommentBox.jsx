@@ -41,7 +41,7 @@ const CommentBox = ({ selectedBlog }) => {
 
     const commentHandler = async () => {
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/comment/${selectedBlog._id}/create`, { content }, {
+            const res = await axios.post(`https://blog-avtx.onrender.com/api/v1/comment/${selectedBlog._id}/create`, { content }, {
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -73,7 +73,7 @@ const CommentBox = ({ selectedBlog }) => {
 
     const deleteComment = async (commentId) => {
         try {
-            const res = await axios.delete(`http://localhost:8000/api/v1/comment/${commentId}/delete`,{
+            const res = await axios.delete(`https://blog-avtx.onrender.com/api/v1/comment/${commentId}/delete`,{
                 withCredentials:true
             })
             if(res.data.success){
@@ -90,7 +90,7 @@ const CommentBox = ({ selectedBlog }) => {
 
     const editCommentHandler = async(commentId)=>{
         try {
-            const res = await axios.put(`http://localhost:8000/api/v1/comment/${commentId}/edit`, {content:editedContent},{
+            const res = await axios.put(`https://blog-avtx.onrender.com/api/v1/comment/${commentId}/edit`, {content:editedContent},{
                 withCredentials:true,
                 headers:{
                     "Content-Type":"application/json"
@@ -114,7 +114,7 @@ const CommentBox = ({ selectedBlog }) => {
 
     const likeCommentHandler = async (commentId) =>{
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/comment/${commentId}/like`,{
+            const res = await axios.get(`https://blog-avtx.onrender.com/api/v1/comment/${commentId}/like`,{
                 withCredentials:true
             });
             if(res.data.success){
@@ -135,7 +135,7 @@ const CommentBox = ({ selectedBlog }) => {
     useEffect(() => {
         const getAllcommentsOfBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/comment/${selectedBlog._id}/comment/all`)
+                const res = await axios.get(`https://blog-avtx.onrender.com/api/v1/comment/${selectedBlog._id}/comment/all`)
                 const data = res.data.comments
                 dispatch(setComment(data))
             } catch (error) {

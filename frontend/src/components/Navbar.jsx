@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from "../assets/logo.png"
 import { Input } from './ui/input'
@@ -42,14 +42,32 @@ import {
 } from "lucide-react"
 
 import { LiaCommentSolid } from 'react-icons/lia'
+import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
+import ResponsiveMenu from './ResponsiveMenu'
 
 
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth)
-    const {theme} = useSelector(store =>store.theme)
+    const { theme } = useSelector(store => store.theme)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [openNav, setOpenNav] = useState(false)
     const dispatch = useDispatch()
-    const navigate= useNavigate()
+    const navigate = useNavigate()
+
+
+    const toggleNav=()=>{
+        setOpenNav(!openNav)
+    }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchTerm.trim() !== "") {
+            navigate(`/search?q=${encodeURIComponent(searchTerm)}`)
+            setSearchTerm("")
+        }
+    }
+
 
     const logoutHandler = async (e) => {
 
@@ -83,10 +101,10 @@ const Navbar = () => {
                         <Input type="text"
                             placeholder="Search"
                             className="border border-gray-700 dark:bg-gray-900 bg-gray-300 w-[300px] hidden md:block"
-                        // value={searchTerm}
-                        // onChange={(e) => setSearchTerm(e.target.value)}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <Button className='absolute right-0 top-0'><Search /></Button>
+                        <Button onClick={handleSearch} className='absolute right-0 top-0'><Search /></Button>
                     </div>
                 </div>
                 <nav className='flex md:gap-7 gap-4 items-center'>
@@ -108,7 +126,7 @@ const Navbar = () => {
                                 <DropdownMenu className="">
                                     <DropdownMenuTrigger asChild>
                                         <Avatar className="cursor-pointer">
-                                            <AvatarImage src= {user.photoUrl ||userLogo} />
+                                            <AvatarImage src={user.photoUrl || userLogo} />
                                             <AvatarFallback>CN</AvatarFallback>
                                         </Avatar>
                                     </DropdownMenuTrigger>
@@ -116,22 +134,22 @@ const Navbar = () => {
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
-                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/profile')}>
+                                            <DropdownMenuItem onClick={() => navigate('/dashboard/profile')}>
                                                 <User />
                                                 <span>Profile</span>
                                                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/your-blog')} >
+                                            <DropdownMenuItem onClick={() => navigate('/dashboard/your-blog')} >
                                                 <ChartColumnBig />
                                                 <span>Your Blog</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/comments')}>
+                                            <DropdownMenuItem onClick={() => navigate('/dashboard/comments')}>
                                                 <LiaCommentSolid />
                                                 <span>Comments</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={()=>navigate('/dashboard/write-blog')}>
+                                            <DropdownMenuItem onClick={() => navigate('/dashboard/write-blog')}>
                                                 <FaRegEdit />
                                                 <span>Write Blog</span>
                                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
@@ -145,15 +163,18 @@ const Navbar = () => {
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
-                                <Button onClick={logoutHandler}>Logout</Button>
+                                <Button className= "hidden md:block" onClick={logoutHandler}>Logout</Button>
                             </div> : <div className='ml-7 md:flex gap-2 '>
                                 <Link to={'/login'}><Button>Login</Button></Link>
                                 <Link className='hidden md:block' to={'/signup'}><Button>Signup</Button></Link>
                             </div>
                         }
                     </div>
-
+                    {
+                      openNav ? <HiMenuAlt3 onClick={toggleNav} className='w-7 h-7 md:hidden'/>:<HiMenuAlt1 className='w-7 h-7 md:hidden' onClick={toggleNav}/>
+                    }
                 </nav>
+                <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav} logoutHandler={logoutHandler}/>
             </div>
         </div>
     )
